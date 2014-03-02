@@ -1,7 +1,7 @@
 window.Flights = Ember.Application.create();
 
 Flights.TripAdapter = DS.RESTAdapter.extend({
-  namespace: 'api/v2',
+  namespace: 'api/v1',
 });
 
 Flights.Store = DS.Store.extend({

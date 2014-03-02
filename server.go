@@ -38,7 +38,7 @@ func main() {
     r.HTML(200, "testing", "")
   })
 
-  m.Get("/api/v2/trips", func(req *http.Request, r render.Render) {
+  m.Get("/api/v1/trips", func(req *http.Request, r render.Render) {
     walk := req.URL.Query().Get("walk")
     log.Print("Walk: " + walk)
     if (walk == "lele") {
@@ -122,6 +122,50 @@ func main() {
             "arriveDate": "2014-01-01T22:00:00",
           },
         },
+      })
+    }
+  })
+
+  m.Get("/api/v1/airports", func(req *http.Request, r render.Render) {
+    origin := req.URL.Query().Get("orig")
+    if (origin == "") {
+      r.JSON(200, map[string]interface{}{
+        "airports": []interface{}{
+          map[string]interface{}{
+            "id": "SIN",
+            "description": "Singapore",
+            "country": "SG",
+          },
+          map[string]interface{}{
+            "id": "DPS",
+            "description": "Denpasar",
+            "country": "ID",
+          },
+        },
+      })
+    } else if (origin == "SIN") {
+      r.JSON(200, map[string]interface{}{
+        "airports": []interface{}{
+          map[string]interface{}{
+            "id": "DPS",
+            "description": "Denpasar",
+            "country": "ID",
+          },
+        },
+      })
+    } else if (origin == "DPS") {
+      r.JSON(200, map[string]interface{}{
+        "airports": []interface{}{
+          map[string]interface{}{
+            "id": "SIN",
+            "description": "Singapore",
+            "country": "ID",
+          },
+        },
+      })
+    } else {
+      r.JSON(200, map[string]interface{}{
+        "airports": []interface{}{},
       })
     }
   })

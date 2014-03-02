@@ -37,6 +37,11 @@ Flights.Flight = DS.Model.extend({
   arriveDate: DS.attr('date'),
 });
 
+Flights.Airport = DS.Model.extend({
+  description: DS.attr('string'),
+  country: DS.attr('string'),
+});
+
 /*
 Flights.Trip.FIXTURES = [
  {

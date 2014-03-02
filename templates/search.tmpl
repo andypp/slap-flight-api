@@ -10,11 +10,23 @@
           <form role="form" {{action "search" on="submit"}}>
             <div class="form-group">
               <label for="origin">Origin</label>
-              {{input value=origin class="form-control" type="text" placeholder="Origin"}}
+              {{view Ember.Select
+                  content=origAirports
+                  optionValuePath="content.id"
+                  optionLabelPath="content.desc"
+                  value=origin
+                  class="form-control"
+                  prompt="Select Origin"}}
             </div>
             <div class="form-group">
               <label for="destination">Destination</label>
-              {{input value=destination class="form-control" type="text" placeholder="Destination"}}
+              {{view Ember.Select
+                  content=destAirports
+                  optionValuePath="content.id"
+                  optionLabelPath="content.desc"
+                  value=destination
+                  class="form-control"
+                  prompt="Select Destination"}}
             </div>
             <div class="form-group">
               <label for="departDate">Depart</label>
@@ -30,7 +42,7 @@
         </div>
       </div>
       <div class="col-md-9">
-        <ul class="nav nav-tabs">
+        <ul class="nav nav-tabs" id="tab-trip-listing">
           <li class="active"><a href="#depart-trip" data-toggle="tab">Depart</a></li>
           <li {{bind-attr class="isReturn::hidden"}}><a href="#return-trip" data-toggle="tab">Return</a></li>
         </ul>

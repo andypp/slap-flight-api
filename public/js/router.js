@@ -7,5 +7,6 @@ Flights.TripsRoute = Ember.Route.extend({
     // these lines can be removed
     controller.set('departTrip', []);
     controller.set('returnTrip', []);
+    controller.set('origModelAirports', this.store.find('airport'));
   }
 });
