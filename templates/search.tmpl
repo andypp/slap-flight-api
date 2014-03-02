@@ -1,0 +1,86 @@
+<script type="text/x-handlebars" data-template-name="trips">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 sidebar">
+        <div class="sidebar-header">
+          <span class="glyphicon glyphicon-screenshot"></span>
+          Search Options
+        </div>
+        <div class="sidebar-content">
+          <form role="form" {{action "search" on="submit"}}>
+            <div class="form-group">
+              <label for="origin">Origin</label>
+              {{input value=origin class="form-control" type="text" placeholder="Origin"}}
+            </div>
+            <div class="form-group">
+              <label for="destination">Destination</label>
+              {{input value=destination class="form-control" type="text" placeholder="Destination"}}
+            </div>
+            <div class="form-group">
+              <label for="departDate">Depart</label>
+              {{input value=departDate class="form-control" type="text" placeholder="Depart"}}
+            </div>
+            <div {{bind-attr class=":form-group isReturn::hidden"}}>
+              <label for="returnDate">Return</label>
+              {{input value=returnDate class="form-control" type="text" placeholder="Return"}}
+            </div>
+            {{view Flights.ReturnSelector}}
+            <button type="submit" class="btn btn-success" {{bind-attr disabled="isSearching"}}>Search <span class="glyphicon glyphicon-search"></span></button>
+          </form>
+        </div>
+      </div>
+      <div class="col-md-9">
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#depart-trip" data-toggle="tab">Depart</a></li>
+          <li {{bind-attr class="isReturn::hidden"}}><a href="#return-trip" data-toggle="tab">Return</a></li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane active" id="depart-trip">
+            {{view Flights.ReturnTripListing trip=departTrip}}
+          </div>
+          <div class="tab-pane" id="return-trip">
+            {{view Flights.ReturnTripListing trip=returnTrip}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</script>
+
+<script type="text/x-handlebars" data-template-name="trip-listing">
+  <div class="flight-boxes">
+    <ul class="flight-boxes-list">
+      {{#each view.trip itemController="trip"}}
+      <li {{bind-attr class="isPromo:promo"}}>
+      <div class="flight-box-header">
+        {{airline}}
+        {{#if hasStops }}
+        ({{stops}} stop)
+        {{/if}}
+        <p>{{price}}</p>
+      </div>
+      <div class="flight-box-content">
+        <p>{{departDate}}</p>
+        <p>{{arriveDate}}</p>
+      </div>
+      <div class="flight-box-footer pull-right">
+        <button class="btn btn-primary" {{action "selectFlight" on "click"}}>Select</button>
+      </div>
+      </li>
+      {{/each}}
+    </ul>
+  </div>
+</script>
+
+<script type="text/x-handlebars" data-template-name="return-selector">
+  <div class="form-group">
+    <div class="btn-group" data-toggle="buttons">
+      <label id="label-return" {{bind-attr class=":btn :btn-primary isReturn:active"}}>
+        <input type="radio" name="options" id="toggle-return"> Return
+      </label>
+      <label id="label-one-way"  {{bind-attr class=":btn :btn-primary isReturn::active"}}>
+        <input type="radio" name="options" id="toggle-oneway"> One Way
+      </label>
+    </div>
+  </div>
+</script>
