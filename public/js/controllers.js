@@ -3,6 +3,7 @@ Flights.TripsController = Ember.ArrayController.extend({
   isSearching: false,
   isReturn: true,
   timeout: null,
+  arriveDatePicker: null,
 
   origAirports: function() {
     return this.get('origModelAirports').map(function(item) {
@@ -26,6 +27,20 @@ Flights.TripsController = Ember.ArrayController.extend({
       this.set('destModelAirports', this.store.find('airport', {'orig': 'xxx'}));
     }
   }.observes('origin'),
+
+  departDateUpdated: function() {
+    if (this.get('departDate') != '') {
+      if (this.get('arriveDatePicker') == null) {
+        this.set('arriveDatePicker', $('#input-arriveDate').datepicker({
+          format: "m/d/yyyy",
+          startDate: this.get('departDate'),
+          todayBtn: "linked",
+        }));
+      } else {
+        $('#input-arriveDate').datepicker("setStartDate", this.get('departDate'));
+      }
+    }
+  }.observes('departDate'),
 
   actions: {
     search: function() {
